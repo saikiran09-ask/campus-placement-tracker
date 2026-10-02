@@ -1,0 +1,53 @@
+<%- include('./partials/header') %>
+
+    <h2>All Applications</h2>
+
+    <div class="card" style="padding: 0;">
+        <% if (applications.length> 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Job Role</th>
+                        <th>Company</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% applications.forEach(app=> { %>
+                        <tr>
+                            <td>
+                                <%= app.User ? app.User.name : 'Unknown' %>
+                            </td>
+                            <td>
+                                <%= app.Job ? app.Job.title : 'Unknown' %>
+                            </td>
+                            <td>
+                                <%= app.Job && app.Job.Company ? app.Job.Company.name : 'Unknown' %>
+                            </td>
+                            <td>
+                                <%= new Date(app.appliedAt).toLocaleDateString() %>
+                            </td>
+                            <td>
+                                <span class="badge">
+                                    <%= app.status %>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/applications/<%= app.id %>" class="btn btn-secondary"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Manage</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <div style="padding: 2rem;">
+                    <p>No applications received yet.</p>
+                </div>
+                <% } %>
+    </div>
+
+    <%- include('./partials/footer') %>

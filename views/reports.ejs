@@ -1,0 +1,76 @@
+<%- include('./partials/header') %>
+
+    <div class="hero">
+        <h2>Admin Reports & Dashboard</h2>
+        <p>Overall statistics for campus recruitment.</p>
+    </div>
+
+    <div class="grid" style="margin-bottom: 20px;">
+        <div class="card">
+            <h3>Total Participants</h3>
+            <p style="font-size: 24px; font-weight: bold;">
+                <%= totalStudents %>
+            </p>
+            <span>Registered Students</span>
+        </div>
+        <div class="card">
+            <h3>Total Companies</h3>
+            <p style="font-size: 24px; font-weight: bold;">
+                <%= totalCompanies %>
+            </p>
+            <span>Visiting Organizations</span>
+        </div>
+        <div class="card">
+            <h3>Job Postings</h3>
+            <p style="font-size: 24px; font-weight: bold;">
+                <%= totalJobs %>
+            </p>
+            <span>Active Opportunities</span>
+        </div>
+        <div class="card">
+            <h3>Applications</h3>
+            <p style="font-size: 24px; font-weight: bold;">
+                <%= totalApplications %>
+            </p>
+            <span>Submitted Applications</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Placement Summary</h3>
+            <table style="margin-top: 15px;">
+                <tr>
+                    <td><strong>Placed Students</strong></td>
+                    <td>
+                        <%= placedStudents %>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Placement Percentage</strong></td>
+                    <td>
+                        <%= placementPercentage %>%
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card">
+            <h3>Salary Insights</h3>
+            <table style="margin-top: 15px;">
+                <tr>
+                    <td><strong>Highest Package</strong></td>
+                    <td>
+                        <%= highestPackage %> LPA
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Average Package</strong></td>
+                    <td>
+                        <%= averagePackage %> LPA
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <%- include('./partials/footer') %>

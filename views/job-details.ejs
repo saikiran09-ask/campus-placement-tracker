@@ -1,0 +1,73 @@
+<%- include('./partials/header') %>
+
+    <div style="max-width: 800px; margin: 2rem auto;">
+        <% if (typeof error !=='undefined' && error) { %>
+            <div class="alert">
+                <%= error %>
+            </div>
+            <% } %>
+
+                <div class="card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 2rem;">
+                        <div>
+                            <h2>
+                                <%= job.title %>
+                            </h2>
+                            <p style="font-size: 1.2rem; color: var(--text-muted);">
+                                <%= job.Company ? job.Company.name : 'Unknown Company' %>
+                            </p>
+                        </div>
+                        <span class="badge">
+                            <%= job.status %>
+                        </span>
+                    </div>
+
+                    <div
+                        style="background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong>Package:</strong><br>
+                            <%= job.salary || 'Not specified' %>
+                        </div>
+                        <div>
+                            <strong>Minimum CGPA:</strong><br>
+                            <%= job.minCGPA || 'None' %>
+                        </div>
+                        <div>
+                            <strong>Eligible Branches:</strong><br>
+                            <%= job.eligibleBranches || 'All Branches' %>
+                        </div>
+                        <div>
+                            <strong>Deadline:</strong><br>
+                            <%= job.deadline ? new Date(job.deadline).toLocaleDateString() : 'No deadline' %>
+                        </div>
+                    </div>
+
+                    <h3>Description</h3>
+                    <p style="line-height: 1.6; white-space: pre-wrap;">
+                        <%= job.description %>
+                    </p>
+
+                    <% if (user && user.role==='student' ) { %>
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                            <% if (applied) { %>
+                                <div
+                                    style="background: #dcfce7; color: #166534; padding: 1rem; border-radius: 0.5rem; text-align: center; font-weight: 500;">
+                                    ✓ You have already applied for this role.
+                                    <br><br>
+                                    <a href="/applications/my-applications" class="btn btn-secondary">Track
+                                        Application</a>
+                                </div>
+                                <% } else { %>
+                                    <form action="/applications/apply/<%= job.id %>" method="POST"
+                                        style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary"
+                                            style="font-size: 1.2rem; padding: 1rem 3rem;">Apply Now</button>
+                                    </form>
+                                    <% } %>
+                        </div>
+                        <% } %>
+                </div>
+    </div>
+
+    <%- include('./partials/footer') %>

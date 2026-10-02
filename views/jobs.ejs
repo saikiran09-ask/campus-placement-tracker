@@ -1,0 +1,47 @@
+<%- include('./partials/header') %>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>Job Opportunities</h2>
+        <% if (user && user.role==='admin' ) { %>
+            <a href="/jobs/add" class="btn btn-primary">+ Create Job Opening</a>
+            <% } %>
+    </div>
+
+    <div class="grid">
+        <% if (jobs.length> 0) { %>
+            <% jobs.forEach(job=> { %>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span class="badge">
+                            <%= job.Company ? job.Company.name : 'Unknown Company' %>
+                        </span>
+                        <% if (job.deadline && new Date()> new Date(job.deadline)) { %>
+                            <span class="badge" style="background: #fee2e2; color: #991b1b;">Closed</span>
+                            <% } else { %>
+                                <span class="badge" style="background: #dcfce7; color: #166534;">
+                                    <%= job.status %>
+                                </span>
+                                <% } %>
+                    </div>
+                    <h3>
+                        <%= job.title %>
+                    </h3>
+
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                        <strong>Package:</strong>
+                        <%= job.salary || 'Not specified' %><br>
+                            <strong>Min CGPA:</strong>
+                            <%= job.minCGPA || 'None' %><br>
+                                <strong>Eligible Branches:</strong>
+                                <%= job.eligibleBranches || 'All' %>
+                    </p>
+
+                    <a href="/jobs/<%= job.id %>" class="btn btn-secondary">View Details & Apply</a>
+                </div>
+                <% }) %>
+                    <% } else { %>
+                        <p>No jobs posted yet.</p>
+                        <% } %>
+    </div>
+
+    <%- include('./partials/footer') %>

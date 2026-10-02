@@ -1,0 +1,34 @@
+<%- include('./partials/header') %>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>Partners & Companies</h2>
+        <% if (user && user.role==='admin' ) { %>
+            <a href="/companies/add" class="btn btn-primary">+ Add Company</a>
+            <% } %>
+    </div>
+
+    <div class="grid">
+        <% if (companies.length> 0) { %>
+            <% companies.forEach(company=> { %>
+                <div class="card">
+                    <h3>
+                        <%= company.name %>
+                    </h3>
+                    <p style="color: var(--text-muted);">
+                        <%= company.location %>
+                    </p>
+                    <p>
+                        <%= company.description %>
+                    </p>
+                    <% if (company.website) { %>
+                        <a href="<%= company.website %>" target="_blank" style="font-weight: 500;">Visit Website
+                            &rarr;</a>
+                        <% } %>
+                </div>
+                <% }) %>
+                    <% } else { %>
+                        <p>No companies registered yet.</p>
+                        <% } %>
+    </div>
+
+    <%- include('./partials/footer') %>

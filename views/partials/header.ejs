@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Placement Tracker</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="navbar-brand">Campus Placement Tracker</div>
+            <div>
+                <a href="/">Home</a>
+                <% if (typeof user !=='undefined' && user) { %>
+                    <a href="/dashboard">Dashboard</a>
+                    <% if (user.role==='admin' ) { %>
+                        <a href="/companies">Companies</a>
+                        <a href="/jobs">Jobs</a>
+                        <a href="/applications">Applications</a>
+                        <a href="/reports">Reports</a>
+                        <% } else { %>
+                            <a href="/jobs">Available Jobs</a>
+                            <a href="/applications/my-applications">My Applications</a>
+                            <% } %>
+                                <a href="/auth/logout">Logout (<%= user.name %>)</a>
+                                <% } else { %>
+                                    <a href="/auth/login">Login</a>
+                                    <a href="/auth/register">Register</a>
+                                    <% } %>
+            </div>
+        </div>
+    </header>
+    <div class="container">

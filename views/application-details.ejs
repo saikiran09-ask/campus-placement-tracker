@@ -1,0 +1,127 @@
+<%- include('./partials/header') %>
+
+    <div style="max-width: 800px; margin: 2rem auto;">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 2rem;">
+                <div>
+                    <h2>Application Tracker</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-muted);">
+                        Candidate: <strong>
+                            <%= application.User ? application.User.name : 'Unknown' %>
+                        </strong>
+                    </p>
+                    <p>
+                        Role: <%= application.Job ? application.Job.title : 'Unknown' %> at
+                            <%= application.Job && application.Job.Company ? application.Job.Company.name : 'Unknown' %>
+                    </p>
+                </div>
+                <span class="badge" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                    <%= application.status %>
+                </span>
+            </div>
+
+            <% if (user.role==='admin' ) { %>
+                <div style="background: #f9fafb; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                    <form action="/applications/<%= application.id %>/status" method="POST"
+                        style="display: flex; gap: 1rem; align-items: center;">
+                        <label><strong>Update Application Status:</strong></label>
+                        <select name="status" class="form-control" style="width: auto;">
+                            <option value="Applied" <%=application.status==='Applied' ? 'selected' : '' %>>Applied
+                            </option>
+                            <option value="Shortlisted" <%=application.status==='Shortlisted' ? 'selected' : '' %>
+                                >Shortlisted</option>
+                            <option value="Rejected" <%=application.status==='Rejected' ? 'selected' : '' %>>Rejected
+                            </option>
+                            <option value="Selected" <%=application.status==='Selected' ? 'selected' : '' %>>Selected
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+                <% } %>
+
+                    <h3>Interview Rounds</h3>
+                    <% if (application.Interviews && application.Interviews.length> 0) { %>
+                        <table style="margin-bottom: 2rem;">
+                            <thead>
+                                <tr>
+                                    <th>Round</th>
+                                    <th>Date</th>
+                                    <th>Result</th>
+                                    <th>Remarks</th>
+                                    <% if (user.role==='admin' ) { %>
+                                        <th>Action</th>
+                                        <% } %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% application.Interviews.forEach(interview=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= interview.round %>
+                                        </td>
+                                        <td>
+                                            <%= interview.date ? new Date(interview.date).toLocaleDateString() : 'TBD'
+                                                %>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="<%= interview.result === 'Passed' ? 'background: #dcfce7; color: #166534;' : 
+                                              interview.result === 'Failed' ? 'background: #fee2e2; color: #991b1b;' : 
+                                              'background: #fef08a; color: #854d0e;' %>">
+                                                <%= interview.result || 'Pending' %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <%= interview.remarks || '-' %>
+                                        </td>
+                                        <% if (user.role==='admin' ) { %>
+                                            <td>
+                                                <form action="/interviews/<%= interview.id %>/update" method="POST"
+                                                    style="display: flex; gap: 0.5rem;">
+                                                    <select name="result" style="padding: 0.25rem;">
+                                                        <option value="Pending" <%=interview.result==='Pending'
+                                                            ? 'selected' : '' %>>Pending</option>
+                                                        <option value="Passed" <%=interview.result==='Passed'
+                                                            ? 'selected' : '' %>>Passed</option>
+                                                        <option value="Failed" <%=interview.result==='Failed'
+                                                            ? 'selected' : '' %>>Failed</option>
+                                                    </select>
+                                                    <input type="text" name="remarks" value="<%= interview.remarks %>"
+                                                        placeholder="Remarks" style="padding: 0.25rem; width: 100px;">
+                                                    <button type="submit" class="btn btn-secondary"
+                                                        style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Save</button>
+                                                </form>
+                                            </td>
+                                            <% } %>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <p style="margin-bottom: 2rem; color: var(--text-muted);">No interview rounds scheduled yet.
+                            </p>
+                            <% } %>
+
+                                <% if (user.role==='admin' ) { %>
+                                    <div style="border-top: 1px solid var(--border-color); padding-top: 2rem;">
+                                        <h4>Schedule New Interview Round</h4>
+                                        <form action="/interviews/add" method="POST"
+                                            style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end;">
+                                            <input type="hidden" name="applicationId" value="<%= application.id %>">
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Round Name (e.g. Technical, HR)</label>
+                                                <input type="text" name="round" class="form-control" required>
+                                            </div>
+                                            <div class="form-group" style="margin: 0;">
+                                                <label>Date</label>
+                                                <input type="date" name="date" class="form-control">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Add Round</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
+
+        </div>
+    </div>
+
+    <%- include('./partials/footer') %>

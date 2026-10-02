@@ -1,0 +1,99 @@
+<%- include('./partials/header') %>
+
+    <div style="max-width: 500px; margin: 40px auto; padding: 0 20px;">
+        <div class="card" style="padding: 30px;">
+            <h2 style="text-align: center; margin-bottom: 25px; font-weight: 600;">Create an Account</h2>
+
+            <% if (typeof error !=='undefined' ) { %>
+                <div class="alert">
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <form action="/auth/register" method="POST">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="name" class="form-control" required placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" class="form-control" required
+                                placeholder="john@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required placeholder="••••••••">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Account Role</label>
+                            <select name="role" id="roleSelect" class="form-control" onchange="toggleStudentFields()">
+                                <option value="student">Student</option>
+                                <option value="admin">Admin / Placement Officer</option>
+                            </select>
+                        </div>
+
+                        <div id="studentFields"
+                            style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #e2e8f0;">
+                            <h4
+                                style="margin-top: 0; color: #475569; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Student Details</h4>
+
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <input type="text" name="branch" id="branchInput" class="form-control"
+                                    placeholder="e.g. CSE, AI&DS" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Current CGPA</label>
+                                <input type="number" step="0.01" name="cgpa" id="cgpaInput" class="form-control"
+                                    placeholder="e.g. 8.5" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Graduation Year</label>
+                                <input type="number" name="graduationYear" id="gradYearInput" class="form-control"
+                                    placeholder="e.g. 2026" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; margin-top: 25px; padding: 12px; font-weight: 600;">Sign Up</button>
+                    </form>
+
+                    <p style="text-align: center; margin-top: 25px; color: #64748b;">
+                        Already have an account? <a href="/auth/login" style="font-weight: 600;">Login here</a>
+                    </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleStudentFields() {
+            const role = document.getElementById('roleSelect').value;
+            const studentFields = document.getElementById('studentFields');
+            const branchInput = document.getElementById('branchInput');
+            const cgpaInput = document.getElementById('cgpaInput');
+            const gradYearInput = document.getElementById('gradYearInput');
+
+            if (role === 'admin') {
+                studentFields.style.display = 'none';
+                // Disable required attribute so form can submit
+                branchInput.removeAttribute('required');
+                cgpaInput.removeAttribute('required');
+                gradYearInput.removeAttribute('required');
+            } else {
+                studentFields.style.display = 'block';
+                branchInput.setAttribute('required', 'true');
+                cgpaInput.setAttribute('required', 'true');
+                gradYearInput.setAttribute('required', 'true');
+            }
+        }
+
+        // Run on init just in case
+        toggleStudentFields();
+    </script>
+
+    <%- include('./partials/footer') %>

@@ -1,0 +1,25 @@
+<%- include('./partials/header') %>
+
+    <div class="hero">
+        <h2>Welcome to Campus Placement Tracker</h2>
+        <p>A web application to bridge the gap between students and placement officers.</p>
+        <div style="margin-top: 15px;">
+            <a href="/auth/register" class="btn btn-primary">Register Now</a>
+            <a href="/auth/login" class="btn btn-secondary" style="margin-left: 10px;">Login</a>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>For Students</h3>
+            <p>Create your student profile and upload your information. You can track available jobs and check
+                eligibility to apply for jobs matching your branch and CGPA.</p>
+        </div>
+        <div class="card">
+            <h3>For Placement Admin</h3>
+            <p>Admins can add recruiting companies and create job listings. Manage incoming student applications and
+                update selection rounds easily.</p>
+        </div>
+    </div>
+
+    <%- include('./partials/footer') %>

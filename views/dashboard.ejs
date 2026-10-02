@@ -1,0 +1,40 @@
+<%- include('./partials/header') %>
+
+    <div class="hero">
+        <h2>Student Dashboard</h2>
+        <p>Welcome back, <strong>
+                <%= user.name %>
+            </strong>!</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>My Academic Profile</h3>
+            <p><strong>Name:</strong>
+                <%= user.name %>
+            </p>
+            <p><strong>Email:</strong>
+                <%= user.email %>
+            </p>
+            <p><strong>Branch:</strong>
+                <%= user.branch || 'Not Set' %>
+            </p>
+            <p><strong>CGPA:</strong>
+                <%= user.cgpa || 'Not Set' %>
+            </p>
+            <p><strong>Graduation Year:</strong>
+                <%= user.graduationYear || 'Not Set' %>
+            </p>
+            <a href="/jobs" class="btn btn-primary" style="margin-top: 10px;">Browse Available Jobs</a>
+        </div>
+
+        <div class="card">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/jobs">Search for Jobs</a></li>
+                <li><a href="/applications/my-applications">View Application Status</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <%- include('./partials/footer') %>
